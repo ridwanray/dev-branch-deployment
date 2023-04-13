@@ -1,0 +1,22 @@
+name: Deploy Development
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.10.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10.x'
+
+      - name: Push to server and deploy
+        uses: akhileshns/heroku-deploy@v3.12.13
+        with:
+          heroku_api_key: '${{secrets.HEROKU_API_KEY}}'
+          heroku_app_name: '${{ secrets.HEROKU_APP_NAME }}'
+          heroku_email: '${{ secrets.HEROKU_EMAIL_ADDRESS }}'
